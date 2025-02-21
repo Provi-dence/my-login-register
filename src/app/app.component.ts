@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common'; // ✅ Import CommonModule
 import { AuthService } from './_service/auth.service';
 
@@ -10,9 +10,14 @@ import { AuthService } from './_service/auth.service';
   templateUrl: './app.component.html',
 })
 export class AppComponent {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   isLoggedIn(): boolean {
-    return this.authService.isAuthenticated(); // ✅ Calls auth service
+    return this.authService.isAuthenticated();
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigateByUrl('/auth/login');
   }
 }

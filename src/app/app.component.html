@@ -1,18 +1,19 @@
 <!-- Navbar -->
-
+@if(isLoggedIn()){
   <div class="navbar bg-base-100 shadow-xl rounded-box [border-width:var(--tab-border)] mx-auto mt-6" style="max-width: 1000px; position: sticky; top: 0; z-index: 1000;">
     <div class="flex-1">
       <a class="btn btn-ghost text-xl">Junwell</a>
     </div>
     <div class="flex-none">
       <ul class="menu menu-horizontal px-1">
-        <li><a>Link</a></li>
+        <li><a routerLink="/home">Home</a></li> 
+        <li><a routerLink="/about">About</a></li>
         <li>
           <details>
-            <summary>Parent</summary>
+            <summary>Preference</summary>
             <ul class="bg-base-100 rounded-t-none p-2">
-              <li><a>Link 1</a></li>
-              <li><a>Link 2</a></li>
+              <li><a>Contact us</a></li>
+              <li><a (click)="logout()">Log out</a></li>
             </ul>
           </details>
         </li>
@@ -50,12 +51,12 @@
       </ul>
     </div>
   </div>
-
+}
 
 <router-outlet></router-outlet>
 
 <!-- Footer -->
-
+@if(isLoggedIn()){
   <footer class="footer footer-center bg-base-200 text-base-content rounded p-10">
     <nav class="grid grid-flow-col gap-4">
       <a class="link link-hover">About us</a>
@@ -102,4 +103,5 @@
       <p>Copyright © 2025 - All right reserved</p>
     </aside>
   </footer>
+}
 

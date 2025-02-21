@@ -1,7 +1,8 @@
-<div class="flex items-center justify-center min-h-screen bg-gray-100">
-    <div class="w-full max-w-md p-8 space-y-6 bg-white border border-gray-300 rounded-lg shadow-md">
+<div class="flex items-center justify-center min-h-screen">
+    <div class="w-full max-w-md p-8 space-y-6 rounded-lg">
+
         <h2 class="text-2xl font-bold text-center">Login</h2>
-        <form class="space-y-4">
+        <form class="space-y-4" (ngSubmit)="login()">
             <label class="input input-bordered flex items-center gap-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -13,7 +14,13 @@
                   <path
                     d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" />
                 </svg>
-                <input type="text" class="grow" placeholder="Email" />
+                <input
+                type="email"
+                class="grow"
+                placeholder="Email"
+                [(ngModel)]="email"
+                name="email"
+                [ngClass]="{'input-accent': !email, '': email}"/>
             </label>
             <label class="input input-bordered flex items-center gap-2">
                 <svg
@@ -26,7 +33,7 @@
                     d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
                     clip-rule="evenodd" />
                 </svg>
-                <input type="password" class="grow" placeholder="password" />
+                <input type="password" class="grow" placeholder="password" [(ngModel)]="password" name="password" [ngClass]="{'input-accent': !password, '': email}"/>
             </label>
             <button type="submit" class="w-full px-4 py-2 font-bold  border border-blue-500 rounded-lg btn btn-outline mb-4">Login</button>
             <div class="label">
@@ -36,7 +43,6 @@
                 Dont have account?
             </div>
             <button routerLink="/auth/register" class="w-full px-4 py-2 font-bold  border border-blue-500 rounded-lg btn btn-outline">Register</button>
-            
         </form>
     </div>
 </div>
