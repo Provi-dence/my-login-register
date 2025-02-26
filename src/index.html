@@ -7,7 +7,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
-<body>
-  <app-root class=""></app-root>
+<body class=" justify-center min-h-screen">
+  <app-root></app-root>
+  <!-- Loading Spinner -->
+  <div id="loading-screen" class="flex justify-center items-center fixed inset-0 bg-white z-50">
+    <span class="loading loading-dots loading-lg scale-[2]"></span>
+  </div>
+
+  <script>
+    window.onload = function() {
+      document.getElementById("loading-screen").style.display = "none";
+    };
+  </script>
+  
 </body>
 </html>

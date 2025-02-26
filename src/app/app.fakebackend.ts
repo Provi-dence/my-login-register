@@ -9,17 +9,18 @@ export const fakeBackendInterceptor: HttpInterceptorFn = (req: HttpRequest<any>,
 
   return of(null).pipe(
     mergeMap(() => {
-      // Register User
       if (url.endsWith('/users/register') && method === 'POST') {
         return registerUser(body);
       }
 
-      // Login User
       if (url.endsWith('/users/login') && method === 'POST') {
         return loginUser(body);
       }
 
-      // Pass through other requests
+      if (url.endsWith('/users') && method === 'GET') {
+        return getUsers();
+      }
+
       return next(req);
     }),
     materialize(),
@@ -28,22 +29,28 @@ export const fakeBackendInterceptor: HttpInterceptorFn = (req: HttpRequest<any>,
   );
 };
 
-// Simulated User Registration
+// 🟢 Simulated User Registration
 function registerUser(body: any) {
   const { email, password, fullName } = body;
-  
+
   if (users.find(x => x.email === email)) {
     return throwError(() => new Error('Email already registered'));
   }
 
-  const newUser = { id: users.length + 1, email, password, fullName };
+  const newUser = { 
+    id: users.length + 1, 
+    email, 
+    password, // 🔴 Consider hashing in real apps
+    fullName 
+  };
+
   users.push(newUser);
   localStorage.setItem('users', JSON.stringify(users));
-
+  console.log("User registered successfully", users);
   return of(new HttpResponse({ status: 200, body: { message: 'User registered successfully' } }));
 }
 
-// Simulated User Login
+// 🔵 Simulated User Login
 function loginUser(body: any) {
   const { email, password } = body;
   const user = users.find(x => x.email === email && x.password === password);
@@ -55,5 +62,17 @@ function loginUser(body: any) {
   const token = `fake-jwt-token-${user.id}`;
   localStorage.setItem('authToken', token);
 
-  return of(new HttpResponse({ status: 200, body: { message: 'Login successful', token } }));
+  return of(new HttpResponse({ 
+    status: 200, 
+    body: { 
+      message: 'Login successful', 
+      token, 
+      user: { id: user.id, email: user.email, fullName: user.fullName } // Returning user info
+    } 
+  }));
+}
+
+// 🟠 Simulated Get Users
+function getUsers() {
+  return of(new HttpResponse({ status: 200, body: users }));
 }

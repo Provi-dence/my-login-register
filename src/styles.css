@@ -6,4 +6,20 @@
 .custom-swal {
     margin-top: 20px; /* Adjust top spacing if needed */
 }
+
+
+:root {
+    --background-color: #ffffff;
+    --text-color: #000000;
+  }
+  
+  [data-theme="dim"] {
+    --background-color: #1a1a1a;
+    --text-color: #ffffff;
+  }
+  
+  body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+  }
   
