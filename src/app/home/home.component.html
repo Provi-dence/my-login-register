@@ -5,14 +5,14 @@
                 src="https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.webp"
                 class="max-w-sm rounded-lg shadow-2xl" />
             <div class="mr-16">
-                <h1 class="text-5xl font-bold">Hello! {{ users[0]?.fullName }}</h1>
+              <h1 class="text-5xl font-bold">Hello {{ currentUser?.fullName }}!</h1>
                 <p class="py-6 text-justify">
                     I am a passionate graphic designer and programmer with a keen eye for detail and a love for creating visually stunning and functional designs. With a strong background in both design and coding, I bring a unique blend of creativity and technical expertise to every project. Whether it's designing a sleek user interface or developing a robust web application, I am dedicated to delivering high-quality work that exceeds expectations.
                 </p>
                 <button (click)="direct()" class="btn btn-primary">Get Started</button>
             </div>
         </div>
-    </div>    
+    </div>
 } @else {
     <div class="hero bg-base-200 min-h-screen">
         <div class="hero-content text-center">

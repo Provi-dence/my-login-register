@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:4200/users';  
+  private apiUrl = 'http://localhost:4200/users';
   private isUserLoggedIn = false;
 
   constructor(private http: HttpClient, private router : Router) {}
@@ -28,5 +28,18 @@ export class AuthService {
   isAuthenticated(): boolean {
     return !!localStorage.getItem('authToken'); // ✅ Returns true if token exists
   }
+
+  getCurrentUserId(): number | null {
+    const token = localStorage.getItem('authToken');
+    if (!token) return null; // No user is logged in
+    const userId = token.split('-').pop(); // Extract user ID from token
+    return userId ? Number(userId) : null;
+  }
+
+  verifyEmail(email: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/verify`, { email });
+  }
+
+
 
 }

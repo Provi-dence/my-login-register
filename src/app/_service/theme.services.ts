@@ -9,7 +9,7 @@ export class ThemeService {
   setTheme(theme: string) {
     this.theme = theme;
     document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme); // Save to local storage
+    localStorage.setItem('theme', theme);
   }
 
   getTheme(): string {

@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
   selector: 'app-login',
   standalone: true,
   templateUrl: './login.component.html',
-  imports: [RouterModule, FormsModule, CommonModule] 
+  imports: [RouterModule, FormsModule, CommonModule]
 })
 export class LoginComponent {
   email = '';
@@ -24,7 +24,18 @@ export class LoginComponent {
     }
 
     this.authService.login(this.email, this.password).subscribe({
-      next: (res: { message: string; token: string }) => {
+      next: (res: { message: string; token: string; user: { verified: boolean } }) => {
+        if (!res.user.verified) {
+          this.showAlert('Please verify your email before logging in.', 'warning');
+
+          // ✅ Redirect to email verification page after 2 seconds
+          setTimeout(() => {
+            this.router.navigate(['/auth/verify-email'], { queryParams: { email: this.email } });
+          }, 2000);
+
+          return;
+        }
+
         // Store the token (simulating authentication)
         localStorage.setItem('authToken', res.token);
 
@@ -45,7 +56,7 @@ export class LoginComponent {
       icon: type,
       timer: 3000,
       showConfirmButton: false,
-      toast: false,
+      toast: true,
       position: 'top',
       width: '800px',
       customClass: {

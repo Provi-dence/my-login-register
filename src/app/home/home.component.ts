@@ -6,10 +6,9 @@ import { HttpClient } from '@angular/common/http';
 @Component({
     selector: 'app-home',
     templateUrl: './home.component.html',
-    
 })
 export class HomeComponent implements OnInit {
-    users: any[]=[];
+    currentUser: any = null;  // Store the logged-in user's data
 
     constructor(
         private router: Router,
@@ -17,14 +16,19 @@ export class HomeComponent implements OnInit {
         private http: HttpClient
     ) { }
 
-    ngOnInit(){
-        this.http.get<any[]>('http://localhost:4200/users').subscribe(data => {
-            this.users = data;
-        })
-    }
+    ngOnInit() {
+      const userId = this.authService.getCurrentUserId();
+
+      if (userId) {
+          this.http.get<any[]>('http://localhost:4200/users').subscribe(data => {
+              this.currentUser = data.find(user => user.id === userId);
+          });
+      }
+  }
+
 
     direct() {
-        if(this.isLoggedIn()){
+        if (this.isLoggedIn()) {
             this.router.navigate(['/home']);
         } else {
             this.router.navigate(['/auth/login']);
